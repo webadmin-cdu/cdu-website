@@ -1,0 +1,222 @@
+/* ===========================================
+   CHAITANYA UNIVERSITY - FONT STYLES
+   =========================================== */
+
+/*
+ * Primary Fonts (loaded via next/font in layout.tsx):
+ * - Roboto: Body text, navigation, UI elements (Vel Tech style)
+ * - Roboto Slab: Headings, display text (Vel Tech style)
+ *
+ * Font Variables:
+ * --font-roboto: Primary sans-serif
+ * --font-roboto-slab: Primary slab-serif for headings
+ */
+
+/* ===========================================
+   TYPE SCALE GUIDELINES
+   =========================================== */
+
+/*
+ * Usage Guidelines:
+ *
+ * display-xl: Hero headlines only (clamp 3-5rem)
+ *   - Homepage hero
+ *   - Landing page main headings
+ *
+ * display-lg: Page titles / H1 (clamp 2.5-4rem)
+ *   - Page headers
+ *   - Major section starts
+ *
+ * display-md: Section titles / H2 (clamp 2-3rem)
+ *   - Homepage sections
+ *   - Content section headers
+ *
+ * display-sm: Subsection titles / H3 (clamp 1.5-2rem)
+ *   - Card titles
+ *   - Sidebar headers
+ *   - FAQ questions
+ *
+ * body-lg: Lead paragraphs (1.125rem)
+ *   - Introductory text
+ *   - Important callouts
+ *   - Card descriptions
+ *
+ * body-md: Default body text (1rem)
+ *   - Main content
+ *   - Paragraphs
+ *   - Lists
+ *
+ * body-sm: Secondary content (0.875rem)
+ *   - Captions
+ *   - Helper text
+ *   - Footer content
+ *
+ * caption: Labels and metadata (0.75rem)
+ *   - Form labels
+ *   - Timestamps
+ *   - Tags/badges
+ */
+
+/* ===========================================
+   FONT WEIGHT GUIDELINES
+   =========================================== */
+
+/*
+ * Weight Usage:
+ *
+ * 300 (Light):
+ *   - Large display text
+ *   - Decorative purposes
+ *
+ * 400 (Regular):
+ *   - Body text
+ *   - Default weight
+ *
+ * 500 (Medium):
+ *   - Navigation items
+ *   - Button text
+ *   - Emphasized body text
+ *
+ * 600 (Semi-Bold):
+ *   - Card titles
+ *   - Section headings
+ *   - Form labels
+ *
+ * 700 (Bold):
+ *   - Page titles
+ *   - Important headings
+ *   - CTAs
+ */
+
+/* ===========================================
+   LINE HEIGHT GUIDELINES
+   =========================================== */
+
+/*
+ * Line Heights:
+ *
+ * 1.1 - Display text (large headings)
+ * 1.15 - Page titles
+ * 1.2 - Section headings
+ * 1.25 - Subheadings
+ * 1.5 - Captions, labels
+ * 1.6 - Secondary body text
+ * 1.7 - Default body text
+ * 1.75 - Lead paragraphs
+ */
+
+/* ===========================================
+   LETTER SPACING
+   =========================================== */
+
+/*
+ * Letter Spacing:
+ *
+ * -0.02em: Display/large headings (tighter)
+ * -0.01em: Medium headings
+ * 0: Body text (default)
+ * 0.05em: All-caps labels
+ * 0.1em: Small all-caps text
+ */
+
+/* ===========================================
+   CUSTOM FONT STYLES
+   =========================================== */
+
+/* Heading styles - Using Roboto Slab */
+.heading-display {
+  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.heading-page {
+  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.heading-section {
+  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.heading-card {
+  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Body styles - Using Roboto */
+.body-lead {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.body-default {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.body-small {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Label styles */
+.label-default {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.label-caps {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* Navigation styles */
+.nav-item {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+}
+
+.nav-item-mobile {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+/* Button styles */
+.btn-text {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Quote/testimonial styles */
+.quote-text {
+  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+/* Code/monospace (if needed) */
+.mono {
+  font-family: ui-monospace, 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+}

@@ -1,0 +1,11 @@
+export { Hero } from './Hero';
+export { StatsBar } from './StatsBar';
+export { QuickAccess } from './QuickAccess';
+export { ProgramsShowcase } from './ProgramsShowcase';
+export { WhyChaitanya } from './WhyChaitanya';
+export { NewsEvents } from './NewsEvents';
+export { Testimonials } from './Testimonials';
+export { PlacementPartners } from './PlacementPartners';
+export { Accreditations } from './Accreditations';
+export { AboutChancellor } from './AboutChancellor';
+export { CTASection } from './CTASection';
