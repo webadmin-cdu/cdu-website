@@ -167,7 +167,7 @@ export function Hero() {
                 {/* Main Heading */}
                 <motion.h1
                   variants={staggerItem}
-                  className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight"
+                  className="font-heading text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight"
                 >
                   {heroSlides[activeIndex].title}
                 </motion.h1>
@@ -175,7 +175,7 @@ export function Hero() {
                 {/* Subtitle */}
                 <motion.p
                   variants={staggerItem}
-                  className="text-accent-400 text-2xl md:text-3xl lg:text-4xl font-medium mb-3"
+                  className="text-accent-400 text-lg sm:text-xl md:text-3xl lg:text-4xl font-medium mb-3"
                 >
                   {heroSlides[activeIndex].subtitle}
                 </motion.p>
@@ -183,7 +183,7 @@ export function Hero() {
                 {/* Tagline */}
                 <motion.p
                   variants={staggerItem}
-                  className="text-white/80 text-lg md:text-xl mb-8 max-w-2xl"
+                  className="text-white/80 text-sm sm:text-base md:text-xl mb-6 md:mb-8 max-w-2xl"
                 >
                   {heroSlides[activeIndex].tagline}
                 </motion.p>

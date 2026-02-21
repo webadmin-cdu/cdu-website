@@ -82,7 +82,7 @@ export function WhyChaitanya() {
               >
                 <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-stretch min-h-[300px]`}>
                   {/* Image */}
-                  <div className="relative w-full md:w-[45%] min-h-[220px] md:min-h-0">
+                  <div className="relative w-full md:w-[45%] min-h-[180px] md:min-h-0">
                     <Image
                       src={section.image}
                       alt={section.imageAlt}
@@ -93,14 +93,14 @@ export function WhyChaitanya() {
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
+                  <div className="flex-1 p-5 sm:p-6 md:p-12 flex flex-col justify-center">
                     <div className={`w-11 h-11 ${section.accent} rounded-xl flex items-center justify-center mb-5`}>
                       <Icon className="w-5 h-5 text-white" weight="fill" />
                     </div>
-                    <h3 className="font-heading text-2xl md:text-3xl font-bold text-primary-900 mb-4">
+                    <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-primary-900 mb-3 md:mb-4">
                       {section.title}
                     </h3>
-                    <p className="text-gray-600 text-[15px] md:text-base leading-relaxed">
+                    <p className="text-gray-600 text-sm md:text-base leading-relaxed">
                       {section.text}
                     </p>
                   </div>

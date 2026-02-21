@@ -45,6 +45,7 @@ export function NewsDetailContent({ news }: NewsDetailContentProps) {
               alt={news.title}
               fill
               className="object-cover"
+              unoptimized
             />
           </div>
 

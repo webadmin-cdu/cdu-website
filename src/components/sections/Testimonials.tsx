@@ -18,58 +18,96 @@ const CARD_COLORS = [
   { bg: 'bg-[#486581]', ring: 'ring-[#486581]' },         // Steel Blue
 ];
 
+// Triple the items for seamless infinite loop
+const ITEMS = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
+const TOTAL = TESTIMONIALS.length;
+
 export function Testimonials() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const isResettingRef = useRef(false);
+
+  // Get card width + gap
+  const getCardStep = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return 0;
+    const card = el.querySelector<HTMLElement>('[data-testimonial]');
+    if (!card) return 0;
+    return card.offsetWidth + 32; // gap-8 = 32px
+  }, []);
+
+  // Jump to the middle set on mount
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const step = getCardStep();
+    if (step > 0) {
+      el.scrollLeft = step * TOTAL;
+    }
+  }, [getCardStep]);
+
+  // Infinite loop: reset position when scrolling past boundaries
+  const handleScroll = useCallback(() => {
+    if (isResettingRef.current) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    const step = getCardStep();
+    if (step <= 0) return;
+
+    const middleStart = step * TOTAL;
+    const middleEnd = step * TOTAL * 2;
+
+    // Scrolled past the middle set → jump back to middle start
+    if (el.scrollLeft >= middleEnd - step / 2) {
+      isResettingRef.current = true;
+      el.style.scrollBehavior = 'auto';
+      el.scrollLeft = el.scrollLeft - step * TOTAL;
+      el.style.scrollBehavior = '';
+      requestAnimationFrame(() => { isResettingRef.current = false; });
+    }
+    // Scrolled before the middle set → jump forward to middle
+    else if (el.scrollLeft <= step * (TOTAL - 1) / 2) {
+      isResettingRef.current = true;
+      el.style.scrollBehavior = 'auto';
+      el.scrollLeft = el.scrollLeft + step * TOTAL;
+      el.style.scrollBehavior = '';
+      requestAnimationFrame(() => { isResettingRef.current = false; });
+    }
+
+    // Update active dot index (based on position within one set)
+    const relativeScroll = el.scrollLeft % (step * TOTAL);
+    const index = Math.round(relativeScroll / step) % TOTAL;
+    setActiveIndex(index);
+  }, [getCardStep]);
 
   const scroll = useCallback((dir: 'prev' | 'next') => {
     const el = scrollRef.current;
     if (!el) return;
-    const card = el.querySelector<HTMLElement>('[data-testimonial]');
-    if (!card) return;
-    const amount = card.offsetWidth + 32;
-    el.scrollBy({ left: dir === 'next' ? amount : -amount, behavior: 'smooth' });
-  }, []);
-
-  const updateActiveIndex = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLElement>('[data-testimonial]');
-    if (!card) return;
-    const cardWidth = card.offsetWidth + 32;
-    const index = Math.round(el.scrollLeft / cardWidth);
-    setActiveIndex(index);
-  }, []);
+    const step = getCardStep();
+    if (step <= 0) return;
+    el.scrollBy({ left: dir === 'next' ? step : -step, behavior: 'smooth' });
+  }, [getCardStep]);
 
   // Auto-scroll
   useEffect(() => {
     if (paused) return;
-    const interval = setInterval(() => {
-      const el = scrollRef.current;
-      if (!el) return;
-      const max = el.scrollWidth - el.clientWidth;
-      if (el.scrollLeft >= max - 10) {
-        el.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        scroll('next');
-      }
-    }, 5000);
+    const interval = setInterval(() => scroll('next'), 5000);
     return () => clearInterval(interval);
   }, [paused, scroll]);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    el.addEventListener('scroll', updateActiveIndex, { passive: true });
-    return () => el.removeEventListener('scroll', updateActiveIndex);
-  }, [updateActiveIndex]);
+    el.addEventListener('scroll', handleScroll, { passive: true });
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   return (
-    <section className="py-16 md:py-20 bg-neutral-100 overflow-hidden">
+    <section className="py-12 md:py-20 bg-neutral-100 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-24">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 md:mb-24">
           <div>
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-600 mb-3">
               Success Stories
@@ -99,7 +137,7 @@ export function Testimonials() {
         </div>
       </div>
 
-      {/* Scrollable cards — negative margin/padding trick to allow vertical overflow */}
+      {/* Scrollable cards — infinite loop */}
       <div
         ref={scrollRef}
         onMouseEnter={() => setPaused(true)}
@@ -107,18 +145,19 @@ export function Testimonials() {
         className="flex gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2+2rem)]"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', marginTop: '-80px', paddingTop: '80px' }}
       >
-        {TESTIMONIALS.map((t, i) => {
-          const color = CARD_COLORS[i % CARD_COLORS.length];
-          const isEven = i % 2 === 0;
+        {ITEMS.map((t, i) => {
+          const originalIndex = i % TOTAL;
+          const color = CARD_COLORS[originalIndex % CARD_COLORS.length];
+          const isEven = originalIndex % 2 === 0;
 
           return (
             <div
-              key={t.id}
+              key={`${t.id}-${i}`}
               data-testimonial
               className="flex-none w-[88%] sm:w-[75%] md:w-[600px] lg:w-[680px] snap-start"
             >
               {/* Card with photo inside at top edge */}
-              <div className={`${color.bg} rounded-3xl p-8 md:p-10 relative shadow-strong`}>
+              <div className={`${color.bg} rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-10 relative shadow-strong`}>
                 {/* Large quote mark */}
                 <Quotes
                   className={`absolute ${
@@ -128,8 +167,8 @@ export function Testimonials() {
                 />
 
                 {/* Profile photo — negative margin to overlap top edge */}
-                <div className={`flex ${isEven ? 'justify-start' : 'justify-end'} -mt-[calc(2rem+56px)] md:-mt-[calc(2.5rem+64px)] mb-5`}>
-                  <div className={`relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ${color.ring} ring-offset-4 ring-offset-neutral-100 shadow-lg`}>
+                <div className={`flex ${isEven ? 'justify-start' : 'justify-end'} -mt-[calc(1.25rem+48px)] sm:-mt-[calc(1.5rem+52px)] md:-mt-[calc(2.5rem+64px)] mb-4 md:mb-5`}>
+                  <div className={`relative rounded-full overflow-hidden ring-4 ${color.ring} ring-offset-3 md:ring-offset-4 ring-offset-neutral-100 shadow-lg`} style={{ width: 'clamp(88px, 20vw, 128px)', height: 'clamp(88px, 20vw, 128px)' }}>
                     <Image
                       src={t.image}
                       alt={t.name}
@@ -141,14 +180,14 @@ export function Testimonials() {
                 </div>
 
                 {/* Name */}
-                <h3 className={`font-heading text-2xl md:text-3xl font-bold text-white mb-4 ${
+                <h3 className={`font-heading text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 md:mb-4 ${
                   isEven ? '' : 'text-center'
                 }`}>
                   {t.name}
                 </h3>
 
                 {/* Quote */}
-                <blockquote className="text-white/90 text-[15px] md:text-base leading-relaxed mb-8">
+                <blockquote className="text-white/90 text-sm md:text-base leading-relaxed mb-5 md:mb-8">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
 
@@ -200,9 +239,10 @@ export function Testimonials() {
             onClick={() => {
               const el = scrollRef.current;
               if (!el) return;
-              const card = el.querySelector<HTMLElement>('[data-testimonial]');
-              if (!card) return;
-              el.scrollTo({ left: i * (card.offsetWidth + 32), behavior: 'smooth' });
+              const step = getCardStep();
+              if (step <= 0) return;
+              // Scroll to the item in the middle set
+              el.scrollTo({ left: step * (TOTAL + i), behavior: 'smooth' });
             }}
             className={`h-2 rounded-full transition-all duration-300 ${
               i === activeIndex

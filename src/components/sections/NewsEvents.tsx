@@ -100,9 +100,9 @@ export function NewsEvents() {
                     />
                   </div>
                   {/* Date Badge */}
-                  <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 10 }} className="date-badge w-[5.5rem] h-[5.5rem] rounded-bl-2xl flex flex-col items-center justify-center shadow-xl">
-                    <span className="relative z-10 block text-4xl font-extrabold text-white leading-none drop-shadow-sm">{day}</span>
-                    <span className="relative z-10 block text-sm font-bold tracking-wider text-white/90 mt-1 drop-shadow-sm">{month}</span>
+                  <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 10 }} className="date-badge w-16 h-16 sm:w-[5rem] sm:h-[5rem] md:w-[5.5rem] md:h-[5.5rem] rounded-bl-2xl flex flex-col items-center justify-center shadow-xl">
+                    <span className="relative z-10 block text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-none drop-shadow-sm">{day}</span>
+                    <span className="relative z-10 block text-[10px] sm:text-xs md:text-sm font-bold tracking-wider text-white/90 mt-0.5 md:mt-1 drop-shadow-sm">{month}</span>
                   </div>
                 </div>
 
