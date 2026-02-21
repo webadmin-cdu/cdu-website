@@ -170,10 +170,10 @@
   --color-error: var(--error);
   --color-info: var(--info);
 
-  /* Fonts - Roboto for body, Roboto Slab for headings */
-  --font-sans: var(--font-roboto), system-ui, sans-serif;
-  --font-heading: var(--font-roboto-slab), Georgia, serif;
-  --font-serif: var(--font-roboto-slab), Georgia, serif;
+  /* Fonts - Inter for body, Playfair Display for headings */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-playfair), Georgia, serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
   --font-display: var(--font-playfair), Georgia, serif;
 
   /* Font sizes - Fluid type scale */
@@ -257,6 +257,11 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes glossy-shimmer {
+  0%, 100% { background-position: 200% 0; }
+  50% { background-position: -200% 0; }
+}
+
 @keyframes pulse-gold {
   0%, 100% { box-shadow: 0 0 0 0 rgba(212, 165, 40, 0.4); }
   50% { box-shadow: 0 0 0 10px rgba(212, 165, 40, 0); }
@@ -286,10 +291,10 @@ html {
   outline-offset: 2px;
 }
 
-/* Selection - Navy/Gold */
+/* Selection - Gold highlight */
 ::selection {
-  background: var(--secondary-200);
-  color: var(--primary-900);
+  background: var(--accent-300);
+  color: var(--secondary-950);
 }
 
 /* Custom Scrollbar */
@@ -578,6 +583,44 @@ html {
   animation: count-up 0.6s ease-out forwards;
 }
 
+/* Glossy metallic text effect for stat numbers */
+.glossy-text {
+  background: linear-gradient(
+    170deg,
+    #D4A528 0%,
+    #FFE499 20%,
+    #FFF0BF 35%,
+    #D4A528 50%,
+    #B8922D 65%,
+    #FFE499 80%,
+    #D4A528 100%
+  );
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.glossy-text::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glossy-shimmer 4s ease-in-out infinite;
+}
+
 /* Floating Apply Now button */
 .floating-cta {
   position: fixed;
@@ -593,3 +636,4 @@ html {
   transform: translateY(0);
   opacity: 1;
 }
+

@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { Button } from '@/components/ui/Button';
-import { CAMPUS_IMAGES, ACCREDITATION_LOGOS } from '@/lib/constants/navigation';
+import { CAMPUS_IMAGES } from '@/lib/constants/navigation';
 import { CaretDown, CaretLeft, CaretRight, ArrowRight, Play } from '@phosphor-icons/react';
 
 // Import Swiper styles
@@ -93,13 +93,13 @@ export function Hero() {
 
   const scrollToContent = () => {
     window.scrollTo({
-      top: window.innerHeight,
+      top: window.innerHeight * 0.85,
       behavior: 'smooth',
     });
   };
 
   return (
-    <section className="relative h-screen min-h-[700px] overflow-hidden">
+    <section className="relative h-[85vh] min-h-[550px] overflow-hidden">
       {/* Swiper Slider */}
       <Swiper
         modules={[Autoplay, EffectFade, Pagination, Navigation]}
@@ -154,33 +154,6 @@ export function Hero() {
       <div className="absolute inset-0 z-20 flex items-center">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            {/* Accreditation Logos - Static */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="mb-8"
-            >
-              <div className="flex flex-wrap items-center gap-3 md:gap-4">
-                {ACCREDITATION_LOGOS.map((accreditation) => (
-                  <div
-                    key={accreditation.name}
-                    className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 md:p-3 border border-white/10 hover:border-accent-400/40 transition-colors group"
-                    title={accreditation.description}
-                  >
-                    <Image
-                      src={accreditation.logo}
-                      alt={accreditation.name}
-                      width={70}
-                      height={45}
-                      className="h-8 md:h-10 w-auto object-contain filter brightness-100 group-hover:brightness-110 transition-all"
-                      unoptimized
-                    />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
             {/* Dynamic Content based on active slide */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -290,48 +263,6 @@ export function Hero() {
           <CaretDown className="h-5 w-5 animate-bounce" />
         </div>
       </motion.button>
-
-      {/* Accreditation Badges - Bottom Right */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-8 right-8 z-30 hidden lg:flex items-center gap-4"
-      >
-        {/* NAAC */}
-        <div className="bg-white rounded-lg p-2 shadow-lg hover:scale-105 transition-transform" title="NAAC A Grade">
-          <Image
-            src="https://images.seeklogo.com/logo-png/45/1/naac-logo-png_seeklogo-455753.png"
-            alt="NAAC A Grade"
-            width={60}
-            height={60}
-            className="h-12 w-auto object-contain"
-            unoptimized
-          />
-        </div>
-        {/* UGC */}
-        <div className="bg-white rounded-lg p-2 shadow-lg hover:scale-105 transition-transform" title="UGC Recognized">
-          <Image
-            src="https://www.pngkey.com/png/full/270-2706316_ugc-logo-ugc-net.png"
-            alt="UGC Recognized"
-            width={60}
-            height={60}
-            className="h-12 w-auto object-contain"
-            unoptimized
-          />
-        </div>
-        {/* AICTE */}
-        <div className="bg-white rounded-lg p-2 shadow-lg hover:scale-105 transition-transform" title="AICTE Approved">
-          <Image
-            src="https://images.seeklogo.com/logo-png/45/1/aicte-logo-png_seeklogo-455823.png"
-            alt="AICTE Approved"
-            width={80}
-            height={60}
-            className="h-12 w-auto object-contain"
-            unoptimized
-          />
-        </div>
-      </motion.div>
 
       {/* Custom Swiper Styles */}
       <style jsx global>{`

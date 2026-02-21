@@ -10,7 +10,7 @@ export function AboutChancellor() {
   return (
     <section className="bg-white py-16 md:py-20">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Image */}
           <div className="relative order-1 lg:order-1">
             <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0">
@@ -47,7 +47,7 @@ export function AboutChancellor() {
               </p>
             </div>
 
-            <div className="space-y-4 text-gray-600 leading-relaxed mb-8">
+            <div className="space-y-4 text-gray-600 text-[17px] leading-relaxed mb-8">
               <p>
                 A university stands for reason, humanism, tolerance, adventure of ideas and the quest for truth. It should be a place of light, liberty and learning. We believe in it. As a young university aiming to be at the pinnacle of transforming education to the youth of today, Chaitanya imparts quality education with academic excellence for creating a knowledge based society with enlightenment.
               </p>
@@ -61,7 +61,7 @@ export function AboutChancellor() {
 
             <Link href="/chancellor">
               <Button size="lg" className="group">
-                Read Full Message
+                Read More
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

@@ -4,12 +4,12 @@
 
 /*
  * Primary Fonts (loaded via next/font in layout.tsx):
- * - Roboto: Body text, navigation, UI elements (Vel Tech style)
- * - Roboto Slab: Headings, display text (Vel Tech style)
+ * - Inter: Body text, navigation, UI elements (premium web readability)
+ * - Playfair Display: Headings, display text (prestigious academic serif)
  *
  * Font Variables:
- * --font-roboto: Primary sans-serif
- * --font-roboto-slab: Primary slab-serif for headings
+ * --font-inter: Primary sans-serif
+ * --font-playfair: Primary serif for headings
  */
 
 /* ===========================================
@@ -123,63 +123,63 @@
    CUSTOM FONT STYLES
    =========================================== */
 
-/* Heading styles - Using Roboto Slab */
+/* Heading styles - Using Playfair Display */
 .heading-display {
-  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-family: var(--font-playfair), Georgia, serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
 
 .heading-page {
-  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-family: var(--font-playfair), Georgia, serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
 
 .heading-section {
-  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-family: var(--font-playfair), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 
 .heading-card {
-  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-family: var(--font-playfair), Georgia, serif;
   font-weight: 600;
   line-height: 1.25;
 }
 
-/* Body styles - Using Roboto */
+/* Body styles - Using Inter */
 .body-lead {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.75;
 }
 
 .body-default {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.7;
 }
 
 .body-small {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.6;
 }
 
 /* Label styles */
 .label-default {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.5;
 }
 
 .label-caps {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 500;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
@@ -189,28 +189,28 @@
 
 /* Navigation styles */
 .nav-item {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   letter-spacing: 0.01em;
 }
 
 .nav-item-mobile {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 500;
   font-size: 1.125rem;
 }
 
 /* Button styles */
 .btn-text {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 500;
   letter-spacing: 0.01em;
 }
 
 /* Quote/testimonial styles */
 .quote-text {
-  font-family: var(--font-roboto-slab), Georgia, serif;
+  font-family: var(--font-playfair), Georgia, serif;
   font-style: italic;
   font-weight: 400;
   line-height: 1.8;

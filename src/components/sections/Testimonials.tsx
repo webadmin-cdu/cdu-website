@@ -1,144 +1,222 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
-import { CaretLeft, CaretRight, Quotes } from '@phosphor-icons/react';
-import { SectionTitle } from '@/components/shared/SectionTitle';
+import { ArrowLeft, ArrowRight, GraduationCap, Briefcase, Quotes } from '@phosphor-icons/react';
 import { TESTIMONIALS } from '@/lib/constants/navigation';
-import { cn } from '@/lib/utils/cn';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+// Color palette rotating through brand colors
+const CARD_COLORS = [
+  { bg: 'bg-[#D4A528]', ring: 'ring-[#D4A528]' },         // Gold
+  { bg: 'bg-[#1E3A5F]', ring: 'ring-[#1E3A5F]' },         // Navy
+  { bg: 'bg-[#C80E13]', ring: 'ring-[#C80E13]' },         // Red
+  { bg: 'bg-[#334E68]', ring: 'ring-[#334E68]' },         // Slate Navy
+  { bg: 'bg-[#B8922D]', ring: 'ring-[#B8922D]' },         // Dark Gold
+  { bg: 'bg-[#243B53]', ring: 'ring-[#243B53]' },         // Deep Navy
+  { bg: 'bg-[#946F1E]', ring: 'ring-[#946F1E]' },         // Bronze
+  { bg: 'bg-[#7F090C]', ring: 'ring-[#7F090C]' },         // Dark Red
+  { bg: 'bg-[#486581]', ring: 'ring-[#486581]' },         // Steel Blue
+];
 
 export function Testimonials() {
-  const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const scroll = useCallback((dir: 'prev' | 'next') => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>('[data-testimonial]');
+    if (!card) return;
+    const amount = card.offsetWidth + 32;
+    el.scrollBy({ left: dir === 'next' ? amount : -amount, behavior: 'smooth' });
+  }, []);
+
+  const updateActiveIndex = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>('[data-testimonial]');
+    if (!card) return;
+    const cardWidth = card.offsetWidth + 32;
+    const index = Math.round(el.scrollLeft / cardWidth);
+    setActiveIndex(index);
+  }, []);
+
+  // Auto-scroll
+  useEffect(() => {
+    if (paused) return;
+    const interval = setInterval(() => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const max = el.scrollWidth - el.clientWidth;
+      if (el.scrollLeft >= max - 10) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scroll('next');
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [paused, scroll]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener('scroll', updateActiveIndex, { passive: true });
+    return () => el.removeEventListener('scroll', updateActiveIndex);
+  }, [updateActiveIndex]);
 
   return (
-    <section className="py-20 md:py-24 bg-neutral-50">
+    <section className="py-16 md:py-20 bg-neutral-100 overflow-hidden">
       <div className="container mx-auto px-4">
-        <SectionTitle
-          subtitle="Success Stories"
-          title="What Our Alumni Say"
-          description="Hear from our graduates who have gone on to achieve great success in their careers."
-        />
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-24">
+          <div>
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-600 mb-3">
+              Success Stories
+            </p>
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-secondary-900">
+              What Our Alumni Say
+            </h2>
+          </div>
 
-        <div className="relative mt-12">
-          {/* Swiper Carousel */}
-          <Swiper
-            modules={[Autoplay, Pagination, Navigation]}
-            spaceBetween={24}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 1.5, spaceBetween: 20 },
-              768: { slidesPerView: 2, spaceBetween: 24 },
-              1024: { slidesPerView: 3, spaceBetween: 30 },
-            }}
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
-            pagination={{
-              clickable: true,
-              el: '.testimonials-pagination',
-              bulletClass: 'testimonial-bullet',
-              bulletActiveClass: 'testimonial-bullet-active',
-            }}
-            navigation={{
-              prevEl: '.testimonials-prev',
-              nextEl: '.testimonials-next',
-            }}
-            loop={true}
-            onSwiper={setSwiperRef}
-            className="pb-12"
-          >
-            {TESTIMONIALS.map((testimonial) => (
-              <SwiperSlide key={testimonial.id}>
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-soft border border-neutral-100 h-full flex flex-col hover:shadow-medium transition-shadow duration-300">
-                  {/* Quotes Icon */}
-                  <Quotes className="h-8 w-8 text-primary-600 mb-6" />
-
-                  {/* Quotes Text */}
-                  <blockquote className="text-neutral-700 leading-relaxed flex-1 mb-6">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </blockquote>
-
-                  {/* Author Info */}
-                  <div className="flex items-center gap-4 pt-6 border-t border-neutral-100">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden ring-2 ring-secondary-400 ring-offset-2">
-                      <Image
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-primary-900">{testimonial.name}</h4>
-                      <p className="text-sm text-neutral-500">
-                        {testimonial.role} at <span className="text-secondary-600 font-medium">{testimonial.company}</span>
-                      </p>
-                      <p className="text-xs text-neutral-400">Batch of {testimonial.batch}</p>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-
-          {/* Custom Pagination */}
-          <div className="testimonials-pagination flex justify-center gap-2 mt-8" />
-
-          {/* Navigation Buttons */}
-          <button
-            className={cn(
-              'testimonials-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10',
-              'w-12 h-12 rounded-full bg-white shadow-medium flex items-center justify-center',
-              'text-primary-600 hover:bg-primary-50 hover:text-primary-700 transition-colors',
-              'hidden lg:flex disabled:opacity-50 disabled:cursor-not-allowed'
-            )}
-            aria-label="Previous testimonial"
-          >
-            <CaretLeft className="h-6 w-6" />
-          </button>
-          <button
-            className={cn(
-              'testimonials-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10',
-              'w-12 h-12 rounded-full bg-white shadow-medium flex items-center justify-center',
-              'text-primary-600 hover:bg-primary-50 hover:text-primary-700 transition-colors',
-              'hidden lg:flex disabled:opacity-50 disabled:cursor-not-allowed'
-            )}
-            aria-label="Next testimonial"
-          >
-            <CaretRight className="h-6 w-6" />
-          </button>
+          {/* Nav arrows */}
+          <div className="flex items-center gap-3 mt-6 md:mt-0">
+            <button
+              onClick={() => scroll('prev')}
+              className="w-11 h-11 rounded-full border border-secondary-300 flex items-center justify-center text-secondary-600 hover:border-primary-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+              aria-label="Previous"
+            >
+              <ArrowLeft className="w-5 h-5" weight="bold" />
+            </button>
+            <button
+              onClick={() => scroll('next')}
+              className="w-11 h-11 rounded-full border border-secondary-300 flex items-center justify-center text-secondary-600 hover:border-primary-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+              aria-label="Next"
+            >
+              <ArrowRight className="w-5 h-5" weight="bold" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Custom Pagination Styles */}
-      <style jsx global>{`
-        .testimonial-bullet {
-          width: 10px;
-          height: 10px;
-          background: #CBD5E1;
-          border-radius: 9999px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
+      {/* Scrollable cards — negative margin/padding trick to allow vertical overflow */}
+      <div
+        ref={scrollRef}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        className="flex gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2+2rem)]"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', marginTop: '-80px', paddingTop: '80px' }}
+      >
+        {TESTIMONIALS.map((t, i) => {
+          const color = CARD_COLORS[i % CARD_COLORS.length];
+          const isEven = i % 2 === 0;
 
-        .testimonial-bullet:hover {
-          background: #94A3B8;
-        }
+          return (
+            <div
+              key={t.id}
+              data-testimonial
+              className="flex-none w-[88%] sm:w-[75%] md:w-[600px] lg:w-[680px] snap-start"
+            >
+              {/* Card with photo inside at top edge */}
+              <div className={`${color.bg} rounded-3xl p-8 md:p-10 relative shadow-strong`}>
+                {/* Large quote mark */}
+                <Quotes
+                  className={`absolute ${
+                    isEven ? 'top-6 right-8' : 'top-6 left-8'
+                  } w-14 h-14 md:w-16 md:h-16 text-white/20`}
+                  weight="fill"
+                />
 
-        .testimonial-bullet-active {
-          width: 28px;
-          background: var(--secondary-500, #D69E2E);
+                {/* Profile photo — negative margin to overlap top edge */}
+                <div className={`flex ${isEven ? 'justify-start' : 'justify-end'} -mt-[calc(2rem+56px)] md:-mt-[calc(2.5rem+64px)] mb-5`}>
+                  <div className={`relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ${color.ring} ring-offset-4 ring-offset-neutral-100 shadow-lg`}>
+                    <Image
+                      src={t.image}
+                      alt={t.name}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                </div>
+
+                {/* Name */}
+                <h3 className={`font-heading text-2xl md:text-3xl font-bold text-white mb-4 ${
+                  isEven ? '' : 'text-center'
+                }`}>
+                  {t.name}
+                </h3>
+
+                {/* Quote */}
+                <blockquote className="text-white/90 text-[15px] md:text-base leading-relaxed mb-8">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+
+                {/* Bottom info */}
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-5 border-t border-white/20">
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <GraduationCap className="w-4 h-4 text-white" weight="fill" />
+                      </div>
+                      <span className="text-white/90 text-xs md:text-sm font-semibold">
+                        Batch of {t.batch}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <Briefcase className="w-4 h-4 text-white" weight="fill" />
+                      </div>
+                      <span className="text-white/90 text-xs md:text-sm font-semibold">
+                        {t.role} at {t.company}
+                      </span>
+                    </div>
+                  </div>
+                  {/* Company logo */}
+                  {t.logo && (
+                    <div className="h-10 md:h-12 px-4 py-1.5 bg-white rounded-lg flex items-center justify-center">
+                      <Image
+                        src={t.logo}
+                        alt={`${t.company} logo`}
+                        width={120}
+                        height={40}
+                        className="object-contain h-7 md:h-8 w-auto max-w-[100px] md:max-w-[120px]"
+                        unoptimized
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Dots indicator */}
+      <div className="flex items-center justify-center gap-2 mt-8">
+        {TESTIMONIALS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              const el = scrollRef.current;
+              if (!el) return;
+              const card = el.querySelector<HTMLElement>('[data-testimonial]');
+              if (!card) return;
+              el.scrollTo({ left: i * (card.offsetWidth + 32), behavior: 'smooth' });
+            }}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === activeIndex
+                ? 'w-8 bg-primary-600'
+                : 'w-2 bg-secondary-300 hover:bg-secondary-400'
+            }`}
+            aria-label={`Go to testimonial ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      <style jsx>{`
+        div[style*="scrollbarWidth"]::-webkit-scrollbar {
+          display: none;
         }
       `}</style>
     </section>

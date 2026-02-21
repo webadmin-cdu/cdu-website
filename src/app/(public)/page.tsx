@@ -1,13 +1,15 @@
 import {
   Hero,
   StatsBar,
-  QuickAccess,
   WhyChaitanya,
   NewsEvents,
   Testimonials,
   PlacementPartners,
   Accreditations,
   AboutChancellor,
+  AboutViceChancellor,
+  BannerSlider,
+  InstitutionalGoals,
   CTASection,
 } from '@/components/sections';
 import { AcademicSchools } from '@/components/sections/AcademicSchools';
@@ -27,17 +29,23 @@ export default function HomePage() {
       {/* About Chancellor */}
       <AboutChancellor />
 
+      {/* About Vice Chancellor */}
+      <AboutViceChancellor />
+
+      {/* Vision, Mission & Institutional Goals */}
+      <InstitutionalGoals />
+
       {/* Academic Schools grid */}
       <AcademicSchools />
 
-      {/* Persona-based quick access portals */}
-      <QuickAccess />
-
-      {/* Why choose Chaitanya section */}
-      <WhyChaitanya />
+      {/* Promotional Banner Slider */}
+      <BannerSlider />
 
       {/* Latest news and events */}
       <NewsEvents />
+
+      {/* Why choose Chaitanya section */}
+      <WhyChaitanya />
 
       {/* Student testimonials */}
       <Testimonials />

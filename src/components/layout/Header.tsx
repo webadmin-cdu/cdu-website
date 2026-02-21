@@ -17,7 +17,6 @@ import {
   Envelope,
   CaretDown,
   X,
-  ArrowRight,
   FacebookLogo,
   TwitterLogo,
   InstagramLogo,
@@ -33,14 +32,11 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [showFloatingCTA, setShowFloatingCTA] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-      // Show floating CTA after scrolling past hero section
-      setShowFloatingCTA(window.scrollY > window.innerHeight);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -291,23 +287,6 @@ export function Header() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Floating Apply Now CTA */}
-      <div
-        className={cn(
-          'floating-cta',
-          showFloatingCTA && 'visible'
-        )}
-      >
-        <Link href="/admissions/how-to-apply">
-          <Button
-            size="lg"
-            className="bg-primary-600 text-white hover:bg-primary-700 font-semibold rounded-full shadow-lg shadow-primary-600/30"
-          >
-            Apply Now
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </Link>
-      </div>
     </>
   );
 }

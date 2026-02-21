@@ -44,9 +44,9 @@ function StatItem({ value, suffix = '', label, delay }: StatItemProps) {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, delay: delay / 1000, ease: 'easeOut' }}
     >
-      <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-accent-400 leading-none font-serif">
+      <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-none font-serif">
         <motion.span>{rounded}</motion.span>
-        {suffix && <span className="text-accent-300">{suffix}</span>}
+        {suffix && <span className="text-white/80">{suffix}</span>}
       </div>
       <div className="text-sm md:text-base text-white/80 mt-2 font-medium">
         {label}

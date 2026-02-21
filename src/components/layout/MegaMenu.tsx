@@ -82,10 +82,10 @@ export const MEGA_MENU_DATA: Record<string, MegaMenuData> = {
       {
         title: 'Schools',
         items: [
-          { label: 'Engineering', href: '/academics/departments/computer-science-engineering', description: 'CSE, ECE, Civil, Mechanical' },
+          { label: 'Engineering', href: '/academics/departments/engineering', description: 'CSE, ECE, Civil, Mechanical' },
           { label: 'Pharmacy', href: '/academics/departments/pharmacy', description: 'B.Pharm, M.Pharm, Pharm.D' },
-          { label: 'Management', href: '/academics/departments/management-studies', description: 'MBA, BBA, B.Com' },
-          { label: 'Sciences', href: '/academics/departments/sciences', description: 'BSc, MSc programs' },
+          { label: 'Management', href: '/academics/departments/commerce-management', description: 'MBA, BBA, B.Com' },
+          { label: 'Sciences', href: '/academics/departments/sciences-humanities', description: 'BSc, MSc programs' },
         ],
       },
       {
@@ -99,7 +99,7 @@ export const MEGA_MENU_DATA: Record<string, MegaMenuData> = {
     ],
     featured: {
       title: '57+ Programs',
-      description: 'Choose from a wide range of undergraduate, postgraduate, and doctoral programs across 8 schools.',
+      description: 'Choose from a wide range of undergraduate, postgraduate, and doctoral programs across 7 departments.',
       image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=250&fit=crop&q=80',
       href: '/academics/programs',
       cta: 'Explore Programs',

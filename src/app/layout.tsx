@@ -1,28 +1,19 @@
 import type { Metadata, Viewport } from 'next';
-import { Roboto, Roboto_Slab, Playfair_Display, Cinzel } from 'next/font/google';
+import { Inter, Playfair_Display, Cinzel } from 'next/font/google';
 import { ToastProvider } from '@/components/providers/ToastProvider';
 import { SkipToContent } from '@/components/shared/SkipToContent';
 import { OrganizationSchema, WebsiteSchema } from '@/components/shared/StructuredData';
 import { SITE_CONFIG } from '@/lib/constants/siteConfig';
 import './globals.css';
 
-// Roboto - Clean, modern sans-serif for body text
-const roboto = Roboto({
-  variable: '--font-roboto',
+// Inter - Premium sans-serif for body text (used by top tech & academic sites)
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
   display: 'swap',
 });
 
-// Roboto Slab - Bold slab-serif for headings
-const robotoSlab = Roboto_Slab({
-  variable: '--font-roboto-slab',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-});
-
-// Playfair Display - Elegant serif for logo and accent text
+// Playfair Display - Elegant high-contrast serif for headings (prestigious, academic)
 const playfair = Playfair_Display({
   variable: '--font-playfair',
   subsets: ['latin'],
@@ -127,7 +118,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${roboto.variable} ${robotoSlab.variable} ${playfair.variable} ${cinzel.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${cinzel.variable}`}>
       <head>
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

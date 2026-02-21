@@ -38,7 +38,7 @@ export function DepartmentContent({ department, programs }: DepartmentContentPro
             <div>
               <SectionTitle
                 subtitle="Department Overview"
-                title={`About ${department.shortName}`}
+                title={`About ${department.name}`}
                 align="left"
               />
               <p className="text-neutral-600 mb-6 leading-relaxed">
